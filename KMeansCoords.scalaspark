@@ -6,6 +6,7 @@
 
 import scala.math.pow
 
+//PART 1
 // closestPoint:givena(latitude/longitude)pointandan arrayof current center points, 
 //returns the index inthe arrayofthecenterclosestto the given point
 def closestPoint(p: (Double,Double), points: Array[(Double,Double)]): Int = {
@@ -36,19 +37,26 @@ def distanceSquared(p1: (Double,Double), p2: (Double,Double)) = {
   pow(p1._1 - p2._1,2) + pow(p1._2 - p2._2,2 )
 }
 
-
+//PART 1 ENDS
 // The device status data file(s)
 val filename = "/loudacre/devicestatus_etl/*"
 
-// K is the number of means (center points of clusters) to find
+//PART 2
+//Set    the    variable    K    (the    number    of    means    to    calculate).    For    this    use    K=5.    
 val K = 5
 
-// ConvergeDist -- the threshold "distance" between iterations at which we decide we are done
-val convergeDist = .1
+
+//PART 3
+// Set    the    variable    convergeDist.    This    will    be    used    to    decide    when    the    k-means
+//calculation    is    done    –when    the    amount    the    locations    of    the    means    changes    
+//between    iterations    is    less    than    convergeDist.  
+val convergeDist = 0.1
     
-// Parse the device status data file
-// Split by delimiter ,
-// Parse  latitude and longitude (4th and 5th fields) into pairs
+
+//PART 4
+// Parse    the    input    file,    which    isdelimited    by    the    character    ‘,’,    into    
+// (latitude,longitude)pairs    (the    4th    and    5th    fields    in    each    line).    Only    
+// include    known    locations    (that    is,    filter    out    (0,0)    locations).    Be    sure    to    persist    
 // Filter out records where lat/long is unavailable -- ie: 0/0 points
 val points = sc.textFile(filename).
      map(line => line.split(',')).
