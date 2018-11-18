@@ -1,22 +1,13 @@
-// Find K Means of Loudacre device status locations
-// 
-// Input data: file(s) with device status data (delimited by ',')
-// including latitude (4th field) and longitude (5th field) of device locations 
-// (lat,lon of 0,0 indicates unknown location)
+// IMplementing an iterative algorithm with spark
+// Subhrajyoti Pradhan
+// Exercise Directory: $DEV1/exercises/spark-iterative
+// Data files (HDFS):/loudacre/devicestatus_etl/*
+// KMeansCoords.scalaspark
 
 import scala.math.pow
 
-// The squared distances between two points
-def distanceSquared(p1: (Double,Double), p2: (Double,Double)) = { 
-  pow(p1._1 - p2._1,2) + pow(p1._2 - p2._2,2 )
-}
-
-// The sum of two points
-def addPoints(p1: (Double,Double), p2: (Double,Double)) = {
-  (p1._1 + p2._1, p1._2 + p2._2)
-}
-
-// for a point p and an array of points, return the index in the array of the point closest to p
+// closestPoint:givena(latitude/longitude)pointandan arrayof current center points, 
+//returns the index inthe arrayofthecenterclosestto the given point
 def closestPoint(p: (Double,Double), points: Array[(Double,Double)]): Int = {
     var index = 0
     var bestIndex = 0
@@ -31,6 +22,20 @@ def closestPoint(p: (Double,Double), points: Array[(Double,Double)]): Int = {
     }
     bestIndex
 }
+
+//giventwo points,    
+//return apointwhichis the sum ofthe two points–thatis,(x1+x2, y1+y2)
+def addPoints(p1: (Double,Double), p2: (Double,Double)) = {
+  (p1._1 + p2._1, p1._2 + p2._2)
+}
+
+
+//   given    two    points,    returnsthe    squared    distance    of    
+//he    two.    This    is    a    common    calculation    required    in    graph    analysis.
+def distanceSquared(p1: (Double,Double), p2: (Double,Double)) = { 
+  pow(p1._1 - p2._1,2) + pow(p1._2 - p2._2,2 )
+}
+
 
 // The device status data file(s)
 val filename = "/loudacre/devicestatus_etl/*"
