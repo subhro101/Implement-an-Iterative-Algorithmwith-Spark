@@ -64,12 +64,16 @@ val points = sc.textFile(filename).
      filter(point => !((point._1 == 0) && (point._2 == 0))).
      persist()
 
+//PART 5
 //start with K randomly selected points from the dataset
-val kPoints = points.takeSample(false, K, 34)
+val kPoints = points.takeSample(false, K, 42)
 println("Starting K points:")
 kPoints.foreach(println) 
 
-// loop until the total distance between one iteration's points and the next is less than the convergence distance specified
+
+//Part 6
+// Iteratively    calculate    a    new    set    of    K    means    until    the    total    distance    between    the    means 
+//calculated    for    this    iteration    and    the    last    is    smaller    than    convergeDist.    For    each    iteration:
 var tempDist = Double.PositiveInfinity
 while (tempDist > convergeDist) {
 
